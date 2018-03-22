@@ -25,7 +25,10 @@ export class WeatherForm extends Component {
                         onChange={evt => this.setState({ txtCityName: evt.target.value })}
                     />
                 </div>
-                <button className="btn btn-success form-control" onClick={this.getTemp}>
+                <button
+                    className="btn btn-success form-control"
+                    onClick={this.getTemp}
+                >
                     Get Weather
                 </button>
             </div>
