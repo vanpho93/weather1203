@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
-export class WeatherForm extends Component {
+const URL = 'http://api.openweathermap.org/data/2.5/weather?appid=01cc37655736835b0b75f2b395737694&units=metric&q=';
+
+class WeatherFormComponent extends Component {
     constructor(props) {
         super(props);
         this.state = { txtCityName: '' };
@@ -10,8 +13,19 @@ export class WeatherForm extends Component {
 
     getTemp() {
         const { txtCityName } = this.state;
-        this.props.onGetTemp(txtCityName);
-        this.setState({ txtCityName: '' });
+        const { dispatch } = this.props;
+        dispatch({ type: 'ON_START_GET_TEMP' });
+        axios.get(URL + txtCityName)
+            .then(response => {
+                const { temp } = response.data.main;
+                dispatch({ type: 'ON_GET_TEMP', cityName: txtCityName, temp });
+                this.setState({ txtCityName: '' });
+            })
+            .catch(error => {
+                alert('Cannot find city name.');
+                dispatch({ type: 'ON_ERROR' });
+                this.setState({ txtCityName: '' });
+            });
     }
 
     render() {
@@ -35,3 +49,5 @@ export class WeatherForm extends Component {
         );
     }
 }
+
+export const WeatherForm = connect()(WeatherFormComponent);
