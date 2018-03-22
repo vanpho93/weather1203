@@ -7,8 +7,8 @@ export class Weather extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cityName: '',
-            temp: null,
+            cityName: 'Saigon',
+            temp: 30,
             loading: false
         };
     }
@@ -18,9 +18,10 @@ export class Weather extends Component {
         // .then(x => console.log(x.data.main.temp));
     }
     render() {
+        const { cityName, temp, loading } = this.state;
         return (
             <div className="container">
-                <WeatherMessage />
+                <WeatherMessage cityName={cityName} temp={temp} loading={loading} />
                 <WeatherForm />
             </div>
         );
