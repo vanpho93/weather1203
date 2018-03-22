@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-const URL = 'http://api.openweathermap.org/data/2.5/weather?appid=01cc37655736835b0b75f2b395737694&units=metric&q=';
-
 export class WeatherForm extends Component {
     constructor(props) {
         super(props);
@@ -12,8 +10,8 @@ export class WeatherForm extends Component {
 
     getTemp() {
         const { txtCityName } = this.state;
-        axios.get(URL + txtCityName)
-        .then(x => alert(x.data.main.temp));
+        this.props.onGetTemp(txtCityName);
+        this.setState({ txtCityName: '' });
     }
 
     render() {
