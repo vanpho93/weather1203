@@ -1,11 +1,17 @@
-export function onError() {
-    return { type: 'ON_ERROR' };
-}
+import axios from 'axios';
 
-export function onStartGetTemp() {
-    return { type: 'ON_START_GET_TEMP' };
-}
+const URL = 'http://api.openweathermap.org/data/2.5/weather?appid=01cc37655736835b0b75f2b395737694&units=metric&q=';
 
-export function onGetTemp(cityName, temp) {
-    return { type: 'ON_GET_TEMP', cityName, temp }
+export function getTemp(cityName) {
+    return function(dispatch) {
+        axios.get(URL + cityName)
+            .then(response => {
+                const { temp } = response.data.main;
+                dispatch({ type: 'ON_GET_TEMP', cityName, temp });
+            })
+            .catch(error => {
+                alert('Cannot find city name.');
+                dispatch({ type: 'ON_ERROR' });
+            });
+    }
 }

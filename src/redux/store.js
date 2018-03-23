@@ -1,4 +1,5 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
 import { cityNameReducer } from './reducers/cityNameReducer';
 import { loadingReducer } from './reducers/loadingReducer';
@@ -10,7 +11,7 @@ const reducer = combineReducers({
     temp: tempReducer
 });
 
-export const store = createStore(reducer);
+export const store = createStore(reducer, applyMiddleware(thunk));
 
 /*
     cityName
