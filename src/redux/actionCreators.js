@@ -4,6 +4,7 @@ const URL = 'http://api.openweathermap.org/data/2.5/weather?appid=01cc3765573683
 
 export function getTemp(cityName) {
     return function(dispatch) {
+        dispatch({ type: 'ON_START_GET_TEMP' });
         axios.get(URL + cityName)
             .then(response => {
                 const { temp } = response.data.main;
